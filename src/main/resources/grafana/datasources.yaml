@@ -1,0 +1,11 @@
+apiVersion: 1
+
+datasources:
+  - name: Influx
+    type: influxdb
+    access: proxy
+    url: http://$INFLUX_HOST:$INFLUX_PORT
+    isDefault: true
+    database: k6
+    editable: true
+    version: 1
