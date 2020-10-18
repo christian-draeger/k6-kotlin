@@ -31,6 +31,8 @@ class K6Grafana(
                 "GF_AUTH_DISABLE_LOGIN_FORM" to "true",
                 "GF_AUTH_ANONYMOUS_ENABLED" to "true",
                 "GF_AUTH_ANONYMOUS_ORG_ROLE" to "Admin",
+                "INFLUX_HOST" to influxConnection.networkAlias,
+                "INFLUX_PORT" to "${influxConnection.internalPort}",
             )
         )
     }

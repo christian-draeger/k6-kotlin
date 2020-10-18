@@ -7,10 +7,6 @@ import org.testcontainers.containers.Network.newNetwork
 const val influxVersion = "latest"
 const val k6Version = "0.28.0"
 
-fun main() {
-    LoadTestEnvironment().start()
-}
-
 class LoadTestEnvironment {
 
     fun start() {
@@ -21,12 +17,6 @@ class LoadTestEnvironment {
         }
         val grafana = K6Grafana(influx.connection).apply {
             withNetwork(k6DockerNetwork)
-            withEnv(
-                mutableMapOf(
-                    "INFLUX_HOST" to influx.networkAlias,
-                    "INFLUX_PORT" to "${influx.internalPort}",
-                )
-            )
             start()
         }
         println("grafana.url: ${grafana.url}")
