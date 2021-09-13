@@ -11,14 +11,12 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    val testContainersVersion = "1.15.0-rc2"
+    val testContainersVersion = "1.16.0"
     implementation("org.testcontainers:testcontainers:$testContainersVersion")
     implementation("org.testcontainers:influxdb:$testContainersVersion")
     implementation("ch.qos.logback:logback-classic:1.1.7")
 
-    // implementation("io.apisense.embed.influx:embed-influxDB:1.2.1")
-
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
 }
 
 tasks {
