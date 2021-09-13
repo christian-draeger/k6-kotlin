@@ -4,7 +4,7 @@ import docker.K6Runner
 import org.testcontainers.containers.Network
 import org.testcontainers.containers.Network.newNetwork
 
-const val influxVersion = "latest"
+const val influxVersion = "1.8.4-alpine"
 const val k6Version = "0.28.0"
 
 class LoadTestEnvironment {
