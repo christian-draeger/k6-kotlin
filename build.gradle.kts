@@ -26,9 +26,9 @@ dependencies {
     val testContainersVersion = "1.16.0"
     implementation("org.testcontainers:testcontainers:$testContainersVersion")
     implementation("org.testcontainers:influxdb:$testContainersVersion")
-    implementation("ch.qos.logback:logback-classic:1.1.7")
+    implementation("ch.qos.logback:logback-classic:1.2.5")
 
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.0")
 }
 
 tasks {
