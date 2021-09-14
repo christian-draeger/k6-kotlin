@@ -1,4 +1,4 @@
-package docker
+package k6.docker
 
 import K6Dsl
 import LoadTestEnvironmentConfig

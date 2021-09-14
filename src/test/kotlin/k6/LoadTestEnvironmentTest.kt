@@ -1,6 +1,9 @@
-import docker.grafana
-import docker.influxDB
-import docker.runner
+package k6
+
+import k6
+import k6.docker.grafana
+import k6.docker.influxDB
+import k6.docker.runner
 import org.junit.jupiter.api.Test
 
 class LoadTestEnvironmentTest {
@@ -27,12 +30,13 @@ class LoadTestEnvironmentTest {
                 version = "latest"
                 internalPort = 3000
                 networkAlias = "my-grafana"
+                // autoOpen = true
             }
             runner {
                 image = "loadimpact/k6"
                 version = "0.28.0"
                 networkAlias = "my-k6"
-                resourcePath = "./k6-tests"
+                resourcePath = "k6-tests"
             }
         }
     }

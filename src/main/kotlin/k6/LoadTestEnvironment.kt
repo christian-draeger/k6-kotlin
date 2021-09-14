@@ -1,7 +1,7 @@
-import docker.DatabaseConnection
-import docker.grafana
-import docker.influxDB
-import docker.runner
+import k6.docker.DatabaseConnection
+import k6.docker.grafana
+import k6.docker.influxDB
+import k6.docker.runner
 import org.testcontainers.containers.Network
 import org.testcontainers.containers.Network.newNetwork
 
@@ -23,7 +23,6 @@ class LoadTestEnvironment(
 data class LoadTestEnvironmentConfig(
     var dockerNetwork: Network = newNetwork(),
     var dbConnection: DatabaseConnection? = null,
-    var headless: Boolean = true,
 )
 
 @K6Dsl

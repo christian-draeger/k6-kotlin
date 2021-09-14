@@ -59,6 +59,7 @@ internal fun `run load test with custom inbfra settings`() {
             version = "latest" // the docker images version
             internalPort = 3000 // port used inside of the docker network
             networkAlias = "grafana" // service alias inside the docker network
+            autoOpen = true // will automatically open grafana dashboard with realtime results in chrome browser
         }
         runner {
             image = "loadimpact/k6" // the docker image that will be used

@@ -27,6 +27,8 @@ dependencies {
     implementation("org.testcontainers:testcontainers:$testContainersVersion")
     implementation("org.testcontainers:influxdb:$testContainersVersion")
     implementation("ch.qos.logback:logback-classic:1.2.5")
+    implementation("org.seleniumhq.selenium:selenium-java:3.141.59")
+    implementation("io.github.bonigarcia:webdrivermanager:5.0.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.0")
 }
@@ -86,7 +88,7 @@ publishing {
             from(components["java"])
             pom {
                 name.set("k6-kotlin")
-                description.set("run k6 load and performance testing scenarios from your JVM project on an out-of-the box but configurable k6 infra spin-up by the use of Docker.")
+                description.set("Run k6 load and performance testing scenarios from your JVM project on an out-of-the box but configurable k6 infra spin-up by the use of Docker.")
                 url.set("https://github.com/christian-draeger/${rootProject.name}")
                 licenses {
                     license {
