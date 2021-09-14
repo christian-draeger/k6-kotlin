@@ -39,6 +39,15 @@ The result of the k6 runner will be piped to STDOUT (updated in real time):
 Since the setup will spin-up a grafana that is preconfigured to connect to the influxDB where the k6 runner results are stored it is possible to watch the results via grafana during a running k6 load test scenario (by default the current results will be updated every 5 seconds):
 ![grafana-output](./grafana-output.gif)
 
+To automatically open the grafana results dashboard during a k6 load test starts vi chrome browser just set the following property:
+```kotlin
+k6 {
+    grafana {
+        autoOpen = true
+    }
+}
+```
+
 ### Customize Setup 
 It is possible to customize most of the crucial config parameters that are used to spin-up a working k6 test environment.
 ```kotlin
