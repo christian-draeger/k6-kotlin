@@ -17,7 +17,8 @@ class LoadTestEnvironmentTest {
             influxDB {
                 image = "influxdb"
                 version = "1.8.4-alpine"
-                dbName = "fancy-name"
+                // TODO: fix db name override
+                // dbName = "fancy-name"
                 networkAlias = "my-influx"
                 internalPort = 8086
             }
