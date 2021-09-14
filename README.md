@@ -30,6 +30,15 @@ fun `run load test with default infra settings`() {
 }
 ```
 
+### Result output
+#### Console
+The result of the k6 runner will be piped to STDOUT (updated in real time):
+![terminal-output](./terminal-output.gif)
+
+#### Grafana
+Since the setup will spin-up a grafana that is preconfigured to connect to the influxDB where the k6 runner results are stored it is possible to watch the results via grafana during a running k6 load test scenario (by default the current results will be updated every 5 seconds):
+![grafana-output](./grafana-output.gif)
+
 ### Customize Setup 
 It is possible to customize most of the crucial config parameters that are used to spin-up a working k6 test environment.
 ```kotlin
@@ -74,3 +83,15 @@ Using k6, you'll be able to catch performance regression and problems earlier, a
 #### Performance monitoring
 [k6](https://k6.io) provides great primitives for performance testing automation. You could run tests with a small amount of load to continuously monitor the performance of your production environment.
 
+## Development
+bump dependencies:
+
+    ./gradlew dependencyUpdates
+
+bump gradle version:
+
+    ./gradlew wrapper --gradle-version 7.0.2
+
+run tests with k6 result output visible:
+
+     ./gradlew clean build -i
