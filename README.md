@@ -8,8 +8,58 @@ e.g., as a jUnit test during you gradle or maven build or triggered programmatic
 It automatically spins-up everything you need to run a load test using k6 (like an influxDB, grafana as an UI for your results, as well as k6 itself) via docker.
 Therefore, it is mandatory to have a running [docker installation](https://docs.docker.com/engine/install/) on your system.
 
-## How to use
-tbd
+## Setup
+**important: It's mandatory to have a running Docker installation to use this library.**
+
+### Add the dependency to your project:
+
+```kotlin
+implementation("io.github.christian-draeger:k6-kotlin:latest")
+```
+
+## Usage
+Place valid k6 load test scenarios (usually js files) under `resources/k6-tests` in your project.
+
+Start the k6 infrastructure and run all the test scenarios that have been placed  in `resources/k6-tests`:
+```kotlin
+// info: you could call it from wherever you want, even your production code. it doesn't necessarily gets called inside a test
+@Test
+fun `run load test with default infra settings`() {
+    val defaultK6Infra = k6
+    defaultK6Infra.start
+}
+```
+
+### Customize Setup 
+It is possible to customize most of the crucial config parameters that are used to spin-up a working k6 test environment.
+```kotlin
+// info: you could call it from wherever you want, even your production code. it doesn't necessarily gets called inside a test
+@Test
+internal fun `run load test with custom inbfra settings`() {
+    k6 {
+        influxDB {
+            image = "influxdb" // the docker image that will be used
+            version = "1.8.4-alpine" // the docker images version
+            dbName = "fancy-name"
+            networkAlias = "influx" // service alias inside the docker network
+            internalPort = 8086 // port used inside of the docker network
+            // external port is dynamically allocated and will be some free port
+        }
+        grafana {
+            image = "grafana/grafana" // the docker image that will be used
+            version = "latest" // the docker images version
+            internalPort = 3000 // port used inside of the docker network
+            networkAlias = "grafana" // service alias inside the docker network
+        }
+        runner {
+            image = "loadimpact/k6" // the docker image that will be used
+            version = "0.28.0" // the docker images version
+            networkAlias = "k6" // service alias inside the docker network
+            resourcePath = "./k6-tests" // location of the test scenarios relative to the src/(main|test)/resources folder
+        }
+    }
+}
+```
 
 ## Why [k6](https://k6.io)?
 k6 is a developer-centric, free and open-source load testing tool built for making performance testing a productive and enjoyable experience.
