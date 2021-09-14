@@ -14,7 +14,7 @@ Therefore, it is mandatory to have a running [docker installation](https://docs.
 ### Add the dependency to your project:
 
 ```kotlin
-implementation("io.github.christian-draeger:k6-kotlin:latest")
+implementation("io.github.christian-draeger:k6-kotlin:0.1.0")
 ```
 
 ## Usage

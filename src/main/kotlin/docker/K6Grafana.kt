@@ -55,7 +55,6 @@ data class GrafanaConfig(
 @K6Dsl
 fun LoadTestEnvironmentConfig.grafana(init: GrafanaConfig.() -> Unit) {
     val config = GrafanaConfig().also(init)
-    println("###### grafana config: $config")
     dbConnection?.let { db ->
         K6Grafana(
             databaseConnection = db,
