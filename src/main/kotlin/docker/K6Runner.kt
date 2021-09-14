@@ -41,7 +41,6 @@ data class K6RunnerConfig(
 @K6Dsl
 fun LoadTestEnvironmentConfig.runner(init: K6RunnerConfig.() -> Unit) {
     val config = K6RunnerConfig().also(init)
-    println("###### k6 runner config: $config")
     dbConnection?.let { db ->
         K6Runner(
             databaseConnection = db,

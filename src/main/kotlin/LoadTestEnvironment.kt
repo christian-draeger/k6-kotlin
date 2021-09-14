@@ -11,10 +11,8 @@ class LoadTestEnvironment(
 
     val start: Unit
         get() {
-            println("env config: $config")
             with(config) {
                 influxDB {}
-                println("env config: $config")
                 grafana {}
                 runner {}
             }

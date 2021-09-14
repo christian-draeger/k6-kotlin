@@ -42,7 +42,6 @@ data class InfluxDbConfig(
 @K6Dsl
 fun LoadTestEnvironmentConfig.influxDB(init: InfluxDbConfig.() -> Unit): K6InfluxDB {
     val config = InfluxDbConfig().also(init)
-    println("###### influx config: $config")
     return K6InfluxDB(config).apply {
         withNetwork(dockerNetwork)
         start()
