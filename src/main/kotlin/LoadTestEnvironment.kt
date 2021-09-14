@@ -1,31 +1,42 @@
-import docker.K6Grafana
-import docker.K6InfluxDB
-import docker.K6Runner
+import docker.DatabaseConnection
+import docker.grafana
+import docker.influxDB
+import docker.runner
 import org.testcontainers.containers.Network
 import org.testcontainers.containers.Network.newNetwork
 
-const val influxVersion = "1.8.4-alpine"
-const val k6Version = "0.28.0"
+class LoadTestEnvironment(
+    private val config: LoadTestEnvironmentConfig = LoadTestEnvironmentConfig()
+) {
 
-class LoadTestEnvironment {
-
-    fun start() {
-        val k6DockerNetwork: Network = newNetwork()
-        val influx = K6InfluxDB().apply {
-            withNetwork(k6DockerNetwork)
-            start()
+    val start: Unit
+        get() {
+            println("env config: $config")
+            with(config) {
+                influxDB {}
+                println("env config: $config")
+                grafana {}
+                runner {}
+            }
         }
-        val grafana = K6Grafana(influx.connection).apply {
-            withNetwork(k6DockerNetwork)
-            start()
-        }
-        println("grafana.url: ${grafana.url}")
-
-        K6Runner().apply {
-            withNetwork(k6DockerNetwork)
-            withEnv("K6_OUT", "influxdb=${influx.connection.dbUrl}")
-            start()
-        }.followOutputUntilTestFinished()
-
-    }
 }
+
+@K6Dsl
+data class LoadTestEnvironmentConfig(
+    var dockerNetwork: Network = newNetwork(),
+    var dbConnection: DatabaseConnection? = null,
+    var headless: Boolean = true,
+)
+
+@K6Dsl
+val k6
+    get() = LoadTestEnvironment(LoadTestEnvironmentConfig())
+
+@K6Dsl
+fun k6(init: LoadTestEnvironmentConfig.() -> Unit): LoadTestEnvironment =
+    with(LoadTestEnvironmentConfig().also(init)) {
+        LoadTestEnvironment(this)
+    }
+
+@DslMarker
+annotation class K6Dsl

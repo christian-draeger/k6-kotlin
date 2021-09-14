@@ -6,6 +6,6 @@ datasources:
     access: proxy
     url: http://$INFLUX_HOST:$INFLUX_PORT
     isDefault: true
-    database: k6
+    database: $INFLUX_DB
     editable: true
     version: 1

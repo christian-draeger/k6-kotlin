@@ -1,35 +1,51 @@
 package docker
 
-import influxVersion
+import K6Dsl
+import LoadTestEnvironmentConfig
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.utility.DockerImageName
 
 class K6InfluxDB(
-    version: String = influxVersion,
-    dbName: String = "k6",
-    val internalPort: Int = 8086,
-    val networkAlias: String = "influx"
-
-) : GenericContainer<K6InfluxDB>(DockerImageName.parse("influxdb:$version")) {
+    private val config: InfluxDbConfig = InfluxDbConfig()
+) : GenericContainer<K6InfluxDB>(DockerImageName.parse("${config.image}:${config.version}")) {
     init {
-        withNetworkAliases(networkAlias)
-        withExposedPorts(internalPort)
-        withEnv("INFLUXDB_DB", dbName)
+        withNetworkAliases(config.networkAlias)
+        withExposedPorts(config.internalPort)
+        withEnv("INFLUXDB_DB", config.dbName)
     }
 
-    val connection: InfluxConnection by lazy {
-        InfluxConnection(
-            networkAlias = networkAlias,
-            internalPort = internalPort,
-            dbName = dbName,
+    val connection: DatabaseConnection by lazy {
+        DatabaseConnection(
+            networkAlias = config.networkAlias,
+            internalPort = config.internalPort,
+            dbName = config.dbName,
         )
     }
 }
 
-data class InfluxConnection(
+data class DatabaseConnection(
     val networkAlias: String,
     val internalPort: Int,
     val dbName: String,
     val dbUrl: String = "http://$networkAlias:$internalPort/$dbName"
 )
 
+@K6Dsl
+data class InfluxDbConfig(
+    var image: String = "influxdb",
+    var version: String = "1.8.4-alpine",
+    var dbName: String = "k6",
+    var internalPort: Int = 8086,
+    var networkAlias: String = "influx"
+)
+
+@K6Dsl
+fun LoadTestEnvironmentConfig.influxDB(init: InfluxDbConfig.() -> Unit): K6InfluxDB {
+    val config = InfluxDbConfig().also(init)
+    println("###### influx config: $config")
+    return K6InfluxDB(config).apply {
+        withNetwork(dockerNetwork)
+        start()
+        this@influxDB.dbConnection = connection
+    }
+}
