@@ -21,7 +21,7 @@ implementation("io.github.christian-draeger:k6-kotlin:0.1.0")
 ### Scenario / Test definitions
 
 > **important:** This library currently just exists to do all the runner setup and result visualization setup for you.
-> The test scenarios are usually k6 tests. Please check the official k6 docs to learn how to write them.
+> The test scenarios are usually k6 tests. Please check the [official k6 docs](https://k6.io/docs/using-k6/) to learn how to write them.
 > In the future this library will possibly evolve to abstract writing scenarios in kotlin or inject postman collections.
 
 To run k6 tests from your jvm project just place as many valid k6 load test scenarios under `resources/k6-tests` in your project.
