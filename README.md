@@ -113,3 +113,11 @@ bump gradle version:
 run tests with k6 result output visible:
 
      ./gradlew clean build -i
+
+publish to local maven repository
+
+    ./gradlew publishToMavenLocal
+
+## License
+
+[MIT](./LICENSE)
