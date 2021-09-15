@@ -18,9 +18,17 @@ implementation("io.github.christian-draeger:k6-kotlin:0.1.0")
 ```
 
 ## Usage
-Place valid k6 load test scenarios (usually js files) under `resources/k6-tests` in your project.
+### Scenario / Test definitions
 
-Start the k6 infrastructure and run all the test scenarios that have been placed  in `resources/k6-tests`:
+> **important:** This library currently just exists to do all the runner setup and result visualization setup for you.
+> The test scenarios are usually k6 tests. Please check the official k6 docs to learn how to write them.
+> In the future this library will possibly evolve to abstract writing scenarios in kotlin or inject postman collections.
+
+To run k6 tests from your jvm project just place as many valid k6 load test scenarios under `resources/k6-tests` in your project.
+K6 test scenarios are written in Javascript. For in depth documentation please see the [official k6 docs](https://k6.io/docs/), especially the ["Using k6" section](https://k6.io/docs/using-k6/).
+
+### Test Execution
+Start the k6 infrastructure and run all the test scenarios that have been placed in `resources/k6-tests`:
 ```kotlin
 // info: you could call it from wherever you want, even your production code. it doesn't necessarily gets called inside a test
 @Test
