@@ -16,6 +16,7 @@ plugins {
 }
 
 group = "io.github.christian-draeger"
+
 val release_version: String by project
 version = release_version
 
@@ -31,30 +32,6 @@ dependencies {
     implementation("io.github.bonigarcia:webdrivermanager:5.0.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.0")
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-    withType<JavaCompile> {
-        options.encoding = "UTF-8"
-    }
-    withType<JacocoReport> {
-        reports {
-            xml.isEnabled = true
-        }
-    }
-    withType<Test> {
-        useJUnitPlatform()
-        testLogging {
-            events(
-                TestLogEvent.PASSED,
-                TestLogEvent.SKIPPED,
-                TestLogEvent.FAILED
-            )
-        }
-    }
 }
 
 java {
@@ -116,5 +93,34 @@ publishing {
         val signingKey: String? by project
         val signingPassword: String? by project
         useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+    }
+}
+
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions.apply {
+            jvmTarget = "1.8"
+            freeCompilerArgs = listOf("-Xjsr305=strict")
+            apiVersion = "1.5"
+            languageVersion = "1.5"
+        }
+    }
+    withType<JavaCompile> {
+        options.encoding = "UTF-8"
+    }
+    withType<JacocoReport> {
+        reports {
+            xml.isEnabled = true
+        }
+    }
+    withType<Test> {
+        useJUnitPlatform()
+        testLogging {
+            events(
+                TestLogEvent.PASSED,
+                TestLogEvent.SKIPPED,
+                TestLogEvent.FAILED
+            )
+        }
     }
 }
