@@ -25,6 +25,10 @@ data class LoadTestEnvironmentConfig(
     var dbConnection: DatabaseConnection? = null,
 )
 
+/**
+ * Instantiate a k6 test environment with default config
+ * @return LoadTestEnvironment
+ */
 @K6Dsl
 val k6
     get() = LoadTestEnvironment(LoadTestEnvironmentConfig())
