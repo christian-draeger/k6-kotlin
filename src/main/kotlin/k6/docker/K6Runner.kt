@@ -35,7 +35,7 @@ data class K6RunnerConfig(
     var image: String = "loadimpact/k6",
     var version: String = "0.28.0",
     var networkAlias: String = "k6",
-    var resourcePath: String = "./k6-tests",
+    var resourcePath: String = "/k6-tests",
 )
 
 @K6Dsl

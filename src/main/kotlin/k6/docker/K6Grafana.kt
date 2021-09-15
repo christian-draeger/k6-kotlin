@@ -21,21 +21,6 @@ class K6Grafana(
     init {
         withNetworkAliases(config.networkAlias)
         withExposedPorts(config.internalPort)
-        withClasspathResourceMapping(
-            "./grafana/dashboards.yaml",
-            "/etc/grafana/provisioning/dashboards/dashboards.yaml",
-            BindMode.READ_ONLY
-        )
-        withClasspathResourceMapping(
-            "./grafana/datasources.yaml",
-            "/etc/grafana/provisioning/datasources/datasources.yaml",
-            BindMode.READ_ONLY
-        )
-        withClasspathResourceMapping(
-            "./grafana/dashboards",
-            "/var/lib/grafana/dashboards/",
-            BindMode.READ_ONLY
-        )
         withEnv(
             mutableMapOf(
                 "GF_AUTH_DISABLE_LOGIN_FORM" to "true",
@@ -46,6 +31,7 @@ class K6Grafana(
                 "INFLUX_DB" to databaseConnection.dbName,
             )
         )
+        addDashboards()
     }
 
     val externalPort: Int by lazy { getMappedPort(config.internalPort) }
@@ -74,6 +60,16 @@ class K6Grafana(
         capabilities.isJavascriptEnabled = true
 
         return capabilities
+    }
+
+    private fun addDashboards() {
+        mapOf(
+            "/grafana/dashboards.yaml" to "/etc/grafana/provisioning/dashboards/dashboards.yaml",
+            "/grafana/datasources.yaml" to "/etc/grafana/provisioning/datasources/datasources.yaml",
+            "/grafana/dashboards" to "/var/lib/grafana/dashboards/"
+        ).forEach {
+            withClasspathResourceMapping(it.key, it.value, BindMode.READ_ONLY)
+        }
     }
 
 }
