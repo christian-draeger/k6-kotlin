@@ -4,17 +4,20 @@ import k6
 import k6.docker.grafana
 import k6.docker.influxDB
 import k6.docker.runner
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class LoadTestEnvironmentTest {
 
     @Test
+    @Disabled
     internal fun `run load test with default infra settings`() {
         val defaultK6Infra = k6
         defaultK6Infra.start
     }
 
     @Test
+    @Disabled
     internal fun `run load test with custom infra settings`() {
         k6 {
             influxDB {
