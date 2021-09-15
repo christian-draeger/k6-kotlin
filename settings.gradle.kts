@@ -10,7 +10,7 @@ pluginManagement {
     plugins {
         kotlin("jvm") version kotlin_version
         id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
-        id("org.jetbrains.dokka") version "1.5.0"
+        id("org.jetbrains.dokka") version "1.4.30"
         id("com.adarshr.test-logger") version "3.0.0"
         jacoco
         `java-library`
