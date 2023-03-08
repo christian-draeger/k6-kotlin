@@ -33,7 +33,7 @@ data class DatabaseConnection(
 @K6Dsl
 data class InfluxDbConfig(
     var image: String = "influxdb",
-    var version: String = "1.8.4-alpine",
+    var version: String = "1.8.4",
     var dbName: String = "k6",
     var internalPort: Int = 8086,
     var networkAlias: String = "influx"
